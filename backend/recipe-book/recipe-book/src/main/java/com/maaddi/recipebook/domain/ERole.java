@@ -1,0 +1,8 @@
+package com.maaddi.recipebook.domain;
+
+public enum ERole {
+    ROLE_USER,
+    ROLE_ADMIN
+}
+
+
