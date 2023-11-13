@@ -1,6 +1,5 @@
 package com.maaddi.recipebook.domain.DTO;
 
-import com.maaddi.recipebook.domain.entities.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -18,17 +17,18 @@ import java.util.Set;
 @Builder
 public class SignupRequestDto {
 
-    @NotBlank
+    @NotBlank(message = "Username must be not blank!")
     @Size(min = 3, max = 20)
+    @Pattern(regexp = ".*[^ ].", message = "Username must not consist of whitespaces only")
     private String username;
 
-    @NotBlank
-    @Size(min = 6, max = 40)
+    @NotBlank(message = "Password must be not blank!")
+    @Size(min = 6, max = 40, message = "Password length be between 6 and 40 characters")
     private String password;
 
-    @NotBlank
+    @NotBlank(message = "Email must not be blank!")
     @Size(max = 50)
-    @Email
+    @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
 
     private Set<String> roles;

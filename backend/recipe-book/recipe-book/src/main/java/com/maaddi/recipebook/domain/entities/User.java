@@ -3,6 +3,7 @@ package com.maaddi.recipebook.domain.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,17 +23,18 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    @Size(max = 20)
+    @NotBlank(message = "Username must not be blank")
+    @Size(max = 20, message = "Username length must not exceed 20 characters")
+    @Pattern(regexp = ".*[^ ].", message = "Username must not consist of whitespaces only")
     private String username;
 
-    @NotBlank
-    @Size(max = 50)
-    @Email
+    @NotBlank(message = "Email must not be blank")
+    @Size(max = 50, message = "Email length must not exceed 50 characters")
+    @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
 
-    @NotBlank
-    @Size(max = 120)
+    @NotBlank(message = "Password must be not blank")
+    @Size(max = 120, message = "Password length must not exceed 120 characters")
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)

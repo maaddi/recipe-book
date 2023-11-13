@@ -28,7 +28,7 @@ public class UserDto {
 
     @NotBlank
     @Size(max = 50)
-    @Email
+    @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
 
     private Set<String> roles;
