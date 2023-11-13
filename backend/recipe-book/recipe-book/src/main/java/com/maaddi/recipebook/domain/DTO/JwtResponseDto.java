@@ -6,7 +6,6 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@Builder
 public class JwtResponseDto {
 
     private String token;

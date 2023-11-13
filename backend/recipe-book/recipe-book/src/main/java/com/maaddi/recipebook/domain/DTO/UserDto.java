@@ -1,9 +1,7 @@
 package com.maaddi.recipebook.domain.DTO;
 
-import com.maaddi.recipebook.domain.entities.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +14,9 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SignupRequestDto {
+public class UserDto {
+
+    private Long id;
 
     @NotBlank
     @Size(min = 3, max = 20)
