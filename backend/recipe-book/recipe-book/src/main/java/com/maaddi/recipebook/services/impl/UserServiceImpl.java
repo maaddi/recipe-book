@@ -1,5 +1,7 @@
 package com.maaddi.recipebook.services.impl;
 
+import com.maaddi.recipebook.domain.DTO.JwtResponseDto;
+import com.maaddi.recipebook.domain.DTO.LoginRequestDto;
 import com.maaddi.recipebook.domain.DTO.SignupRequestDto;
 import com.maaddi.recipebook.domain.ERole;
 import com.maaddi.recipebook.domain.entities.Role;
@@ -10,16 +12,22 @@ import com.maaddi.recipebook.mapper.UserMapper;
 import com.maaddi.recipebook.repository.RoleRepository;
 import com.maaddi.recipebook.repository.UserRepository;
 import com.maaddi.recipebook.security.jwt.JwtUtils;
+import com.maaddi.recipebook.security.services.UserDetailsImpl;
 import com.maaddi.recipebook.services.UserService;
 import jakarta.validation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -90,7 +98,24 @@ public class UserServiceImpl implements UserService {
                 }
             });
         }
+
         user.setRoles(roles);
         return userRepository.save(user);
+    }
+
+    @Override
+    public JwtResponseDto loginUser(LoginRequestDto loginRequestDto) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(), loginRequestDto.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .toList();
+
+        return new JwtResponseDto(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles);
     }
 }

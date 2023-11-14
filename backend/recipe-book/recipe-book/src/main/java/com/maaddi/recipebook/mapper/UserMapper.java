@@ -1,5 +1,6 @@
 package com.maaddi.recipebook.mapper;
 
+import com.maaddi.recipebook.domain.DTO.JwtResponseDto;
 import com.maaddi.recipebook.domain.DTO.SignupRequestDto;
 import com.maaddi.recipebook.domain.DTO.UserDto;
 import com.maaddi.recipebook.domain.entities.Role;

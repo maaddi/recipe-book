@@ -1,5 +1,7 @@
 package com.maaddi.recipebook.controllers;
 
+import com.maaddi.recipebook.domain.DTO.JwtResponseDto;
+import com.maaddi.recipebook.domain.DTO.LoginRequestDto;
 import com.maaddi.recipebook.domain.DTO.SignupRequestDto;
 import com.maaddi.recipebook.domain.DTO.UserDto;
 import com.maaddi.recipebook.exception.ConflictException;
@@ -33,5 +35,11 @@ public class AuthController {
     public UserDto registerUser(@Valid @RequestBody SignupRequestDto signupRequestDto) throws ConflictException, ValidationException {
         LOGGER.info("POST /api/auth/signup body: {}", signupRequestDto);
         return userMapper.userToUserDto(userService.registerUser(signupRequestDto));
+    }
+
+    @PostMapping("/signin")
+    public JwtResponseDto loginUser(@Valid @RequestBody LoginRequestDto loginRequestDto) {
+        LOGGER.info("POST /api/auth/signin body: {}", loginRequestDto);
+        return userService.loginUser(loginRequestDto);
     }
 }
