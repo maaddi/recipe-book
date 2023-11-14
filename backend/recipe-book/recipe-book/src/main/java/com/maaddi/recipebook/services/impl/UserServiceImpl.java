@@ -1,17 +1,22 @@
 package com.maaddi.recipebook.services.impl;
 
-import com.maaddi.recipebook.domain.DTO.JwtResponseDto;
+import com.maaddi.recipebook.domain.DTO.jwt.JwtResponseDto;
 import com.maaddi.recipebook.domain.DTO.LoginRequestDto;
 import com.maaddi.recipebook.domain.DTO.SignupRequestDto;
+import com.maaddi.recipebook.domain.DTO.jwt.TokenRefreshRequestDto;
+import com.maaddi.recipebook.domain.DTO.jwt.TokenRefreshResponseDto;
 import com.maaddi.recipebook.domain.ERole;
+import com.maaddi.recipebook.domain.entities.RefreshToken;
 import com.maaddi.recipebook.domain.entities.Role;
 import com.maaddi.recipebook.domain.entities.User;
 import com.maaddi.recipebook.exception.ConflictException;
+import com.maaddi.recipebook.exception.TokenRefreshException;
 import com.maaddi.recipebook.exception.ValidationException;
 import com.maaddi.recipebook.mapper.UserMapper;
 import com.maaddi.recipebook.repository.RoleRepository;
 import com.maaddi.recipebook.repository.UserRepository;
 import com.maaddi.recipebook.security.jwt.JwtUtils;
+import com.maaddi.recipebook.security.services.RefreshTokenService;
 import com.maaddi.recipebook.security.services.UserDetailsImpl;
 import com.maaddi.recipebook.services.UserService;
 import jakarta.validation.*;
@@ -26,15 +31,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
     private final UserRepository userRepository;
 
@@ -42,17 +47,20 @@ public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder encoder;
 
-    private JwtUtils jwtUtils;
+    private final JwtUtils jwtUtils;
 
     private final UserMapper userMapper;
 
-    public UserServiceImpl(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils, UserMapper userMapper) {
+    private final RefreshTokenService refreshTokenService;
+
+    public UserServiceImpl(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils, UserMapper userMapper, RefreshTokenService refreshTokenService) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.encoder = encoder;
         this.jwtUtils = jwtUtils;
         this.userMapper = userMapper;
+        this.refreshTokenService = refreshTokenService;
     }
 
     @Override
@@ -109,13 +117,29 @@ public class UserServiceImpl implements UserService {
                 new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(), loginRequestDto.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
-
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        String jwt = jwtUtils.generateJwtToken(userDetails);
+
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .toList();
 
-        return new JwtResponseDto(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles);
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
+
+        return new JwtResponseDto(jwt, refreshToken.getToken(), userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles);
+    }
+
+    @Override
+    public TokenRefreshResponseDto refreshtoken(TokenRefreshRequestDto request) {
+        String requestRefreshToken = request.getRefreshToken();
+
+        Optional<RefreshToken> token = refreshTokenService.findByToken(requestRefreshToken);
+        if (token.isEmpty()) {
+            throw new TokenRefreshException(requestRefreshToken, "Refresh token is not in database!");
+        }
+        refreshTokenService.verifyExpiration(token.get());
+        User user = token.get().getUser();
+        String accessToken = jwtUtils.generateTokenFromUsername(user.getUsername());
+        return new TokenRefreshResponseDto(accessToken, requestRefreshToken);
     }
 }

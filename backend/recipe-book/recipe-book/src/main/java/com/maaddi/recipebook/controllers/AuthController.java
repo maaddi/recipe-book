@@ -1,9 +1,11 @@
 package com.maaddi.recipebook.controllers;
 
-import com.maaddi.recipebook.domain.DTO.JwtResponseDto;
+import com.maaddi.recipebook.domain.DTO.jwt.JwtResponseDto;
 import com.maaddi.recipebook.domain.DTO.LoginRequestDto;
 import com.maaddi.recipebook.domain.DTO.SignupRequestDto;
 import com.maaddi.recipebook.domain.DTO.UserDto;
+import com.maaddi.recipebook.domain.DTO.jwt.TokenRefreshRequestDto;
+import com.maaddi.recipebook.domain.DTO.jwt.TokenRefreshResponseDto;
 import com.maaddi.recipebook.exception.ConflictException;
 import com.maaddi.recipebook.exception.ValidationException;
 import com.maaddi.recipebook.mapper.UserMapper;
@@ -41,5 +43,11 @@ public class AuthController {
     public JwtResponseDto loginUser(@Valid @RequestBody LoginRequestDto loginRequestDto) {
         LOGGER.info("POST /api/auth/signin body: {}", loginRequestDto);
         return userService.loginUser(loginRequestDto);
+    }
+
+    @PostMapping("/refreshtoken")
+    public TokenRefreshResponseDto refreshtoken(@Valid @RequestBody TokenRefreshRequestDto request) {
+        LOGGER.info("POST /api/auth/refreshtoken body: {}", request);
+        return userService.refreshtoken(request);
     }
 }

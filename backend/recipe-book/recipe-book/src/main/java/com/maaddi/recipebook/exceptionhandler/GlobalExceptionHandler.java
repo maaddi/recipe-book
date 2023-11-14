@@ -1,6 +1,8 @@
 package com.maaddi.recipebook.exceptionhandler;
 
 import com.maaddi.recipebook.exception.ConflictException;
+import com.maaddi.recipebook.exception.ErrorMessage;
+import com.maaddi.recipebook.exception.TokenRefreshException;
 import com.maaddi.recipebook.exception.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,10 +12,12 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +38,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleUnprocessableEntity(Exception ex, WebRequest request) {
         LOGGER.error(ex.getMessage(), ex);
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.UNPROCESSABLE_ENTITY, request);
+    }
+
+    @ExceptionHandler(value = {TokenRefreshException.class})
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorMessage handleTokenRefreshException(TokenRefreshException ex, WebRequest request) {
+        return new ErrorMessage(
+                HttpStatus.FORBIDDEN.value(),
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false));
     }
 
     @Override

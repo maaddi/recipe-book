@@ -1,4 +1,4 @@
-package com.maaddi.recipebook.domain.DTO;
+package com.maaddi.recipebook.domain.DTO.jwt;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
