@@ -30,9 +30,12 @@ export class RegisterComponent {
   constructor(private fb: FormBuilder, private authService: AuthService) { }
 
   onSubmit(): void {
-    console.log(this.registerForm);
+    if (!this.registerForm.valid) {
+      console.log("Invalid input!");
+      return;
+    }
     const registerRequest = this.registerForm.value as RegisterRequest;
-    console.log(registerRequest);
+
     this.authService.register(registerRequest).subscribe({
       next: data => {
         console.log(data);
