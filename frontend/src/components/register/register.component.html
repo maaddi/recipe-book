@@ -1,16 +1,16 @@
 <div class="background">
   <div class="container">
-    <p-card header="Signup">
+    <p-card header="Sign up">
       <form [formGroup]="registerForm">
         <div class="inputField">
               <span class="p-float-label">
-                <input id="username" type="text" pInputText formControlName="username" class="p-inputtext-sm" [style]="{width: '100%'}">
+                <input id="username" type="text" pInputText formControlName="username" class="p-inputtext-sm">
                 <label for="username">Username</label>
               </span>
         </div>
         <div class="inputField">
               <span class="p-float-label">
-                <input id="email" type="email" pInputText formControlName="email" class="p-inputtext-sm" [style]="{width: '100%'}">
+                <input id="email" type="email" pInputText formControlName="email" class="p-inputtext-sm">
                 <label for="email">Email</label>
               </span>
         </div>
@@ -21,7 +21,11 @@
                 <label for="password">Password</label>
               </span>
         </div>
+        <div class="inputField">
+          <p-button label="Sign up" type="submit"></p-button>
+        </div>
       </form>
+      <span>Already have an account? Login</span>
     </p-card>
   </div>
 </div>

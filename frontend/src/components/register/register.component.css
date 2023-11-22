@@ -16,6 +16,20 @@
   width: 22%;
 }
 
+:host >>> .p-card-title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: black;
+}
+
+:host >>> .p-card-body {
+  padding: 1.5em 2.5em;
+}
+
+input {
+  width: 100%;
+}
+
 :host >>> .p-card {
   border: 1px solid #B7791F;
   background-color: #EDF2F790;
@@ -27,9 +41,25 @@
 }
 
 :host >>> .p-card .p-card-content {
-  margin-top: 1em;
+  margin-top: 1.5em;
 }
 
 .inputField {
   margin-bottom: 2em;
+  /**padding: 0 1em;**/
+}
+
+:host >>> .p-button {
+  background-color: #ECC94B;
+  color: black;
+  border: none;
+  width: 100%;
+}
+
+:host >>> .p-button:hover {
+  filter: brightness(90%);
+}
+
+:host >>> .p-button:focus {
+  box-shadow: none;
 }
