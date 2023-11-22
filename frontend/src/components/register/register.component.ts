@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
@@ -7,15 +7,17 @@ import {CardModule} from "primeng/card";
 import {InputTextModule} from "primeng/inputtext";
 import {PasswordModule} from "primeng/password";
 import {ButtonModule} from "primeng/button";
+import {Messages, MessagesModule} from "primeng/messages";
+import {Message} from "primeng/api";
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, CardModule, ReactiveFormsModule, InputTextModule, PasswordModule, ButtonModule],
+  imports: [CommonModule, CardModule, ReactiveFormsModule, InputTextModule, PasswordModule, ButtonModule, MessagesModule],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
 
   registerForm = this.fb.group({
     username: ['', Validators.required],
@@ -25,15 +27,34 @@ export class RegisterComponent {
 
   isSuccessful = false;
   isSignUpFailed = false;
-  errorMessage = '';
+  //errorMessage = '';
+  successMessage: Message[] = [];
+  errorMessage: Message[] = [];
 
   constructor(private fb: FormBuilder, private authService: AuthService) { }
+
+  ngOnInit(): void {
+    this.successMessage = [
+      {
+        severity: 'success',
+        detail: 'Your account has been created!'
+      }
+    ];
+    this.errorMessage = [
+      {
+        severity: 'error',
+        detail: 'Error'
+      }
+    ];
+  }
 
   onSubmit(): void {
     if (!this.registerForm.valid) {
       console.log("Invalid input!");
       return;
     }
+
+    this.isSignUpFailed = false;
     const registerRequest = this.registerForm.value as RegisterRequest;
 
     this.authService.register(registerRequest).subscribe({
@@ -43,7 +64,7 @@ export class RegisterComponent {
         this.isSignUpFailed = false;
       },
       error: err => {
-        this.errorMessage = err.error.message;
+        this.errorMessage[0].detail = err.error;
         this.isSignUpFailed = true;
       }
     });

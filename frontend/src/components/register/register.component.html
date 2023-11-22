@@ -1,7 +1,7 @@
 <div class="background">
   <div class="container">
     <p-card header="Sign up">
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <form *ngIf="!isSuccessful" [formGroup]="registerForm" #form="ngForm" (ngSubmit)="onSubmit()">
         <div class="inputField">
           <span class="p-float-label">
             <input id="username" type="text" pInputText formControlName="username" class="p-inputtext-sm">
@@ -40,8 +40,14 @@
         <div class="inputField">
           <p-button label="Sign up" type="submit"></p-button>
         </div>
+        <span>Already have an account? Login</span>
+        <div *ngIf="isSignUpFailed">
+          <p-messages [value]="errorMessage"></p-messages>
+        </div>
       </form>
-      <span>Already have an account? Login</span>
+      <div *ngIf="isSuccessful">
+        <p-messages [value]="successMessage" [closable]="false"></p-messages>
+      </div>
     </p-card>
   </div>
 </div>
