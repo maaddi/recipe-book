@@ -18,9 +18,9 @@ import {ButtonModule} from "primeng/button";
 export class RegisterComponent {
 
   registerForm = this.fb.group({
-    username: [''],
-    email: ['', Validators.required, Validators.email],
-    password: ['', Validators.required, Validators.minLength(8), Validators.maxLength(255)]
+    username: ['', Validators.required],
+    email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+    password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(255)]]
   });
 
   isSuccessful = false;
@@ -30,8 +30,9 @@ export class RegisterComponent {
   constructor(private fb: FormBuilder, private authService: AuthService) { }
 
   onSubmit(): void {
+    console.log(this.registerForm);
     const registerRequest = this.registerForm.value as RegisterRequest;
-
+    console.log(registerRequest);
     this.authService.register(registerRequest).subscribe({
       next: data => {
         console.log(data);
@@ -43,5 +44,17 @@ export class RegisterComponent {
         this.isSignUpFailed = true;
       }
     });
+  }
+
+  get username() {
+    return this.registerForm.get('username');
+  }
+
+  get email() {
+    return this.registerForm.get('email');
+  }
+
+  get password() {
+    return this.registerForm.get('password');
   }
 }
