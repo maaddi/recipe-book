@@ -1,1 +1,27 @@
-<p>register works!</p>
+<div class="background">
+  <div class="container">
+    <p-card header="Signup">
+      <form [formGroup]="registerForm">
+        <div class="inputField">
+              <span class="p-float-label">
+                <input id="username" type="text" pInputText formControlName="username" class="p-inputtext-sm" [style]="{width: '100%'}">
+                <label for="username">Username</label>
+              </span>
+        </div>
+        <div class="inputField">
+              <span class="p-float-label">
+                <input id="email" type="email" pInputText formControlName="email" class="p-inputtext-sm" [style]="{width: '100%'}">
+                <label for="email">Email</label>
+              </span>
+        </div>
+        <div class="inputField">
+              <span class="p-float-label">
+                <p-password id="password" formControlName="password" [toggleMask]="true" class="p-inputtext-sm" [style]="{width: '100%'}"
+                            [inputStyle]="{'width':'100%'}"></p-password>
+                <label for="password">Password</label>
+              </span>
+        </div>
+      </form>
+    </p-card>
+  </div>
+</div>

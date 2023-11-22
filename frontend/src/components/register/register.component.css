@@ -1,0 +1,35 @@
+.background {
+  background: url("src/images/loginBackground.jpg") no-repeat;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 22%;
+}
+
+:host >>> .p-card {
+  border: 1px solid #B7791F;
+  background-color: #EDF2F790;
+  backdrop-filter: blur(4px);
+}
+
+:host >>> .p-card-title {
+  text-align: center;
+}
+
+:host >>> .p-card .p-card-content {
+  margin-top: 1em;
+}
+
+.inputField {
+  margin-bottom: 2em;
+}
