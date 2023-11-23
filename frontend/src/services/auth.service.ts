@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {LoginRequest} from "../dtos/login-request";
 import {Observable} from "rxjs";
 import {RegisterRequest} from "../dtos/register-request";
+import {User} from "../dtos/user";
 
 const AUTH_API = 'http://localhost:8080/api/auth/';
 
@@ -17,9 +18,9 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  login(loginRequest: LoginRequest): Observable<any> {
+  login(loginRequest: LoginRequest): Observable<User> {
     const url = AUTH_API + 'signin';
-    return this.http.post(url, loginRequest, httpOptions);
+    return this.http.post<User>(url, loginRequest, httpOptions);
   }
 
   register(registerRequest: RegisterRequest): Observable<any> {

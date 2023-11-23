@@ -7,7 +7,7 @@ import {CardModule} from "primeng/card";
 import {InputTextModule} from "primeng/inputtext";
 import {PasswordModule} from "primeng/password";
 import {ButtonModule} from "primeng/button";
-import {Messages, MessagesModule} from "primeng/messages";
+import {MessagesModule} from "primeng/messages";
 import {Message} from "primeng/api";
 
 @Component({
@@ -27,25 +27,20 @@ export class RegisterComponent implements OnInit {
 
   isSuccessful = false;
   isSignUpFailed = false;
-  //errorMessage = '';
   successMessage: Message[] = [];
   errorMessage: Message[] = [];
 
   constructor(private fb: FormBuilder, private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.successMessage = [
-      {
+    this.successMessage = [{
         severity: 'success',
         detail: 'Your account has been created!'
-      }
-    ];
-    this.errorMessage = [
-      {
+    }];
+    this.errorMessage = [{
         severity: 'error',
         detail: 'Error'
-      }
-    ];
+    }];
   }
 
   onSubmit(): void {

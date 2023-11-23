@@ -1,1 +1,37 @@
-<p>login works!</p>
+<div class="background">
+  <div class="container">
+    <p-card header="Sign in">
+      <form *ngIf="!isLoggedIn" [formGroup]="loginForm" #form="ngForm" (ngSubmit)="onSubmit()">
+        <div class="inputField">
+          <span class="p-float-label">
+            <input id="username" type="text" pInputText formControlName="username" class="p-inputtext-sm">
+            <label for="username">Username</label>
+          </span>
+          <div *ngIf="username?.invalid && (username?.dirty || form.submitted)">
+            <div *ngIf="username?.errors?.['required']">
+              <span class="p-error">Username is required!</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="inputField">
+          <span class="p-float-label">
+            <p-password id="password" formControlName="password" [feedback]="false" [toggleMask]="true" class="input p-inputtext-sm ng-submitted" [style]="{width: '100%'}"
+                        [inputStyle]="{'width':'100%'}"></p-password>
+            <label for="password">Password</label>
+          </span>
+          <div *ngIf="password?.invalid && (password?.dirty || form.submitted)">
+            <span *ngIf="password?.errors?.['required']" class="p-error">Password is required!</span>
+          </div>
+        </div>
+        <div class="inputField">
+          <p-button label="Sign in" type="submit"></p-button>
+        </div>
+        <span>New to Recipes? Sign up</span>
+        <div *ngIf="isLoginFailed">
+          <p-messages [value]="errorMessage"></p-messages>
+        </div>
+      </form>
+    </p-card>
+  </div>
+</div>
