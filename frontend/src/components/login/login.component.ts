@@ -74,6 +74,21 @@ export class LoginComponent implements OnInit {
     window.location.reload();
   }
 
+  logout(): void {
+    const user = JSON.parse(window.sessionStorage.getItem('auth-user')!);
+    this.authService.logout(user.id).subscribe({
+      next: data => {
+        console.log(data);
+        this.storageService.clean();
+        this.isLoggedIn = false;
+        this.isLoginFailed = false;
+      },
+      error: err => {
+        this.errorMessage[0].detail = err.error;
+      }
+    });
+  }
+
   get username() {
     return this.loginForm.get('username');
   }

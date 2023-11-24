@@ -18,6 +18,15 @@ export class StorageService {
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
   }
 
+  public updateUser(updateUser: any): string {
+    let user = JSON.parse(window.sessionStorage.getItem(USER_KEY)!);
+    if (user) {
+      user.token = updateUser['accessToken'];
+      window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+    }
+    return user.token;
+  }
+
   public getUser(): any {
     const user = window.sessionStorage.getItem(USER_KEY);
     if (user) {

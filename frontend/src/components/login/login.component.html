@@ -32,6 +32,9 @@
           <p-messages [value]="errorMessage"></p-messages>
         </div>
       </form>
+      <div *ngIf="isLoggedIn">
+        <p-button label="Logout" (onClick)="logout()"></p-button>
+      </div>
     </p-card>
   </div>
 </div>

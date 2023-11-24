@@ -28,8 +28,15 @@ export class AuthService {
     return this.http.post(url, registerRequest, httpOptions);
   }
 
-  logout(): Observable<any> {
-    const url = AUTH_API + 'signout';
+  logout(id: number): Observable<any> {
+    const url = AUTH_API + `signout/${id}`;
     return this.http.post(url, httpOptions);
+  }
+
+  refreshToken(user: string): Observable<any> {
+    const url = AUTH_API + 'refreshtoken';
+    const refreshToken = JSON.parse(user).refreshToken;
+    console.log(refreshToken);
+    return this.http.post(url, {'refreshToken': refreshToken}, httpOptions);
   }
 }

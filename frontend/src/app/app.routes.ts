@@ -8,5 +8,6 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'signup', component: RegisterComponent },
   { path: 'signin', component: LoginComponent },
-  { path: 'admin', component: BoardAdminComponent }
+  { path: 'admin', component: BoardAdminComponent },
+  { path: '', component: LoginComponent }
 ];
