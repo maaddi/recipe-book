@@ -20,23 +20,11 @@ public class JwtUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    //@Value("${maaddi.app.jwtSecret}")
     private SecretKey jwtSecret;
 
     @Value("${maaddi.app.jwtExpirationMs}")
     private int jwtExpirationMs;
 
-    /*public String generateJwtToken(Authentication authentication) {
-
-        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
-
-        return Jwts.builder()
-                .setSubject((userPrincipal.getUsername()))
-                .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-                .signWith(key(), SignatureAlgorithm.HS256)
-                .compact();
-    }*/
 
     private Key key() {
         jwtSecret = Keys.secretKeyFor(SignatureAlgorithm.HS512);

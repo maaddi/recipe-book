@@ -11,6 +11,7 @@ import {CardModule} from "primeng/card";
 import {InputTextModule} from "primeng/inputtext";
 import {PaginatorModule} from "primeng/paginator";
 import {PasswordModule} from "primeng/password";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -29,16 +30,11 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage: Message[] = [];
-  roles: string[] = [];
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private storageService: StorageService) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private storageService: StorageService, private router: Router) {
   }
 
   ngOnInit(): void {
-    if (this.storageService.isLoggedIn()) {
-      this.isLoggedIn = true;
-      this.roles = this.storageService.getUser().roles;
-    }
     this.errorMessage = [{
       severity: 'error',
       detail: 'error'
@@ -60,18 +56,13 @@ export class LoginComponent implements OnInit {
         this.storageService.saveUser(data);
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        this.roles = this.storageService.getUser().roles;
-        //this.reloadPage();
+        this.router.navigate(['/home']);
       },
       error: err => {
         this.errorMessage[0].detail = err.error;
         this.isLoginFailed = true;
       }
     });
-  }
-
-  reloadPage(): void {
-    window.location.reload();
   }
 
   logout(): void {

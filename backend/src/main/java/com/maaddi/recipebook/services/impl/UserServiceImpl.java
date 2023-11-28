@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public TokenRefreshResponseDto refreshtoken(TokenRefreshRequestDto request) {
+    public TokenRefreshResponseDto refreshToken(TokenRefreshRequestDto request) {
         String requestRefreshToken = request.getRefreshToken();
 
         Optional<RefreshToken> token = refreshTokenService.findByToken(requestRefreshToken);
@@ -140,6 +140,11 @@ public class UserServiceImpl implements UserService {
         refreshTokenService.verifyExpiration(token.get());
         User user = token.get().getUser();
         String accessToken = jwtUtils.generateTokenFromUsername(user.getUsername());
-        return new TokenRefreshResponseDto(accessToken, requestRefreshToken);
+        return new TokenRefreshResponseDto(accessToken);
+    }
+
+    @Override
+    public int logout(Long id) {
+        return this.refreshTokenService.deleteByUserId(id);
     }
 }

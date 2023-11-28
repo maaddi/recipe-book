@@ -46,8 +46,14 @@ public class AuthController {
     }
 
     @PostMapping("/refreshtoken")
-    public TokenRefreshResponseDto refreshtoken(@Valid @RequestBody TokenRefreshRequestDto request) {
+    public TokenRefreshResponseDto refreshToken(@Valid @RequestBody TokenRefreshRequestDto request) {
         LOGGER.info("POST /api/auth/refreshtoken body: {}", request);
-        return userService.refreshtoken(request);
+        return userService.refreshToken(request);
+    }
+
+    @PostMapping("/signout/{id}")
+    public int logout(@PathVariable Long id) {
+        LOGGER.info("POST /api/auth/signout");
+        return userService.logout(id);
     }
 }

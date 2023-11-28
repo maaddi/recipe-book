@@ -15,5 +15,7 @@ public interface UserService {
 
     JwtResponseDto loginUser(LoginRequestDto loginRequestDto);
 
-    TokenRefreshResponseDto refreshtoken(TokenRefreshRequestDto request);
+    TokenRefreshResponseDto refreshToken(TokenRefreshRequestDto request);
+
+    int logout(Long id);
 }
