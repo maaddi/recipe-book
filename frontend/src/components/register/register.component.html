@@ -7,7 +7,7 @@
             <input id="username" type="text" pInputText formControlName="username" class="p-inputtext-sm">
             <label for="username">Username</label>
           </span>
-          <div *ngIf="username?.invalid && username?.dirty">
+          <div *ngIf="username?.invalid && (username?.dirty || form.submitted)">
             <div *ngIf="username?.errors?.['required']">
               <span class="p-error">Username is required!</span>
             </div>
@@ -19,7 +19,7 @@
             <input id="email" type="text" pInputText formControlName="email" class="p-inputtext-sm" required>
             <label for="email">Email</label>
           </span>
-          <div *ngIf="email?.invalid && email?.dirty">
+          <div *ngIf="email?.invalid && (email?.dirty || form.submitted)">
             <span *ngIf="email?.errors?.['required']" class="p-error">Email is required!</span>
             <span *ngIf="email?.errors?.['pattern']" class="p-error">Please enter a valid email!</span>
           </div>
@@ -31,7 +31,7 @@
                         [inputStyle]="{'width':'100%'}"></p-password>
             <label for="password">Password</label>
           </span>
-          <div *ngIf="password?.invalid && password?.dirty">
+          <div *ngIf="password?.invalid && (password?.dirty || form.submitted)">
             <span *ngIf="password?.errors?.['required']" class="p-error">Password is required!</span>
             <span *ngIf="password?.errors?.['minlength']" class="p-error">Password not long enough!</span>
             <span *ngIf="password?.errors?.['maxlength']" class="p-error">Password too long!</span>
@@ -40,7 +40,7 @@
         <div class="inputField">
           <p-button label="Sign up" type="submit"></p-button>
         </div>
-        <span>Already have an account? Login</span>
+        <span>Already have an account? <a href="/signin">Login</a></span>
         <div *ngIf="isSignUpFailed">
           <p-messages [value]="errorMessage"></p-messages>
         </div>

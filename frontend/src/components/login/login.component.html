@@ -27,14 +27,11 @@
         <div class="inputField">
           <p-button label="Sign in" type="submit"></p-button>
         </div>
-        <span>New to Recipes? Sign up</span>
+        <span>New to Recipes? <a href="/signup">Sign up</a></span>
         <div *ngIf="isLoginFailed">
           <p-messages [value]="errorMessage"></p-messages>
         </div>
       </form>
-      <div *ngIf="isLoggedIn">
-        <p-button label="Logout" (onClick)="logout()"></p-button>
-      </div>
     </p-card>
   </div>
 </div>

@@ -63,3 +63,7 @@ input {
 :host >>> .p-button:focus {
   box-shadow: none;
 }
+
+a {
+  color: black;
+}

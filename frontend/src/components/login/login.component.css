@@ -63,3 +63,19 @@ input {
 :host >>> .p-button:focus {
   box-shadow: none;
 }
+
+a {
+  color: black;
+}
+
+
+/** MAKE RESPONSIVE
+@media only screen and (max-width: 600px) {
+  .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+  }
+}**/
