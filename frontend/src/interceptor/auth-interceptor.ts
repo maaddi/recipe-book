@@ -24,6 +24,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
   constructor(private storageService: StorageService, private authService: AuthService, private eventBusService: EventBusService) {
   }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log("intecept");
     let user = window.sessionStorage.getItem(USER_KEY);
     let token = null;
     if (user) {
@@ -41,12 +42,14 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         ) {
           return this.handle401Error(req, next, user!);
         }
+        console.log("here");
         return throwError(() => error);
       })
     );
   }
 
   private handle401Error(request: HttpRequest<any>, next: HttpHandler, user: string) {
+    console.log("refresh");
     if (!this.isRefreshing) {
       this.isRefreshing = true;
 
