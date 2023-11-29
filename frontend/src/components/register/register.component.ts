@@ -9,6 +9,7 @@ import {PasswordModule} from "primeng/password";
 import {ButtonModule} from "primeng/button";
 import {MessagesModule} from "primeng/messages";
 import {Message} from "primeng/api";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -30,7 +31,7 @@ export class RegisterComponent implements OnInit {
   successMessage: Message[] = [];
   errorMessage: Message[] = [];
 
-  constructor(private fb: FormBuilder, private authService: AuthService) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.successMessage = [{
@@ -57,6 +58,8 @@ export class RegisterComponent implements OnInit {
         console.log(data);
         this.isSuccessful = true;
         this.isSignUpFailed = false;
+        setInterval(() => {
+          this.router.navigate(['/signin']);}, 3000);
       },
       error: err => {
         this.errorMessage[0].detail = err.error;

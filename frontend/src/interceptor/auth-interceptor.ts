@@ -24,7 +24,6 @@ export class HttpRequestInterceptor implements HttpInterceptor {
   constructor(private storageService: StorageService, private authService: AuthService, private eventBusService: EventBusService) {
   }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log("intecept");
     let user = window.sessionStorage.getItem(USER_KEY);
     let token = null;
     if (user) {
@@ -42,7 +41,6 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         ) {
           return this.handle401Error(req, next, user!);
         }
-        console.log("here");
         return throwError(() => error);
       })
     );
@@ -58,12 +56,9 @@ export class HttpRequestInterceptor implements HttpInterceptor {
           switchMap(data => {
             this.isRefreshing = false;
             const token = this.storageService.updateUser(data);
-            console.log(token);
-            console.log(request.headers);
             request = request.clone ({
               headers: request.headers.set('Authorization', `Bearer ${token}`)
             });
-            console.log(request.headers);
             return next.handle(request);
           }),
           catchError((error) => {
