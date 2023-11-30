@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.router.navigate(['/home']);
+        window.location.reload();
       },
       error: err => {
         console.log(err);

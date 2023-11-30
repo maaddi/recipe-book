@@ -17,5 +17,5 @@ public interface UserService {
 
     TokenRefreshResponseDto refreshToken(TokenRefreshRequestDto request);
 
-    int logout(Long id);
+    void logout(Long id);
 }

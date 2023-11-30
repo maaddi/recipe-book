@@ -20,7 +20,6 @@ export class HomeComponent implements OnInit {
         this.content = data;
       },
       error: err => {
-        console.log(err)
         if (err.error) {
           this.content = JSON.parse(err.error).message;
         } else {

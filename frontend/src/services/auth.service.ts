@@ -28,7 +28,7 @@ export class AuthService {
     return this.http.post(url, registerRequest, httpOptions);
   }
 
-  logout(id: number): Observable<any> {
+  logout(id: number) {
     const url = AUTH_API + `signout/${id}`;
     return this.http.post(url, httpOptions);
   }

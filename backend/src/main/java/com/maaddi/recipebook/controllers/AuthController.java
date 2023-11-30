@@ -52,8 +52,8 @@ public class AuthController {
     }
 
     @PostMapping("/signout/{id}")
-    public int logout(@PathVariable Long id) {
+    public void logout(@PathVariable Long id) {
         LOGGER.info("POST /api/auth/signout");
-        return userService.logout(id);
+        userService.logout(id);
     }
 }

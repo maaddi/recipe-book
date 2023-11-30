@@ -1,0 +1,26 @@
+.header {
+  background-color: #B7791F;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 2em;
+  padding: 1em 2em;
+}
+
+a {
+  color: black;
+}
+
+:host >>> .p-avatar:hover {
+  filter: brightness(90%);
+}
+
+.item {
+
+}
+
+:host >>> .p-button {
+  background-color: #ECC94B;
+  color: black;
+  border: none;
+}

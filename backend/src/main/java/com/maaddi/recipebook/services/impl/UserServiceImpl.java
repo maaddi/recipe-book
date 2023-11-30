@@ -144,7 +144,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int logout(Long id) {
-        return this.refreshTokenService.deleteByUserId(id);
+    public void logout(Long id) {
+
+        this.refreshTokenService.deleteByUserId(id);
     }
 }
