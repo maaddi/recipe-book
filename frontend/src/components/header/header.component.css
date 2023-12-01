@@ -1,7 +1,7 @@
 .header {
   background-color: #B7791F;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
   gap: 2em;
   padding: 1em 2em;
@@ -15,8 +15,8 @@ a {
   filter: brightness(90%);
 }
 
-.item {
-
+:host >>> .p-button:hover {
+  filter: brightness(90%);
 }
 
 :host >>> .p-button {

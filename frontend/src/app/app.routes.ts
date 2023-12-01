@@ -6,6 +6,7 @@ import {HomeComponent} from "../components/home/home.component";
 import {isLoggedInGuard} from "./is-logged-in.guard";
 import {authGuard} from "./auth.guard";
 import {UserDetailsComponent} from "../components/user-details/user-details.component";
+import {CreateRecipeComponent} from "../components/create-recipe/create-recipe.component";
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [authGuard] },
@@ -13,5 +14,6 @@ export const routes: Routes = [
   { path: 'signin', component: LoginComponent, canActivate: [isLoggedInGuard] },
   { path: 'admin', component: BoardAdminComponent, canActivate: [authGuard] },
   { path: 'userDetails', component: UserDetailsComponent, canActivate: [authGuard] },
+  { path: 'createRecipe', component: CreateRecipeComponent, canActivate: [authGuard] },
   { path: '', component: LoginComponent, canActivate: [isLoggedInGuard] }
 ];

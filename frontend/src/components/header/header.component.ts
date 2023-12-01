@@ -6,20 +6,24 @@ import {AvatarModule} from "primeng/avatar";
 import {ButtonModule} from "primeng/button";
 import {MenuModule} from "primeng/menu";
 import {AuthService} from "../../services/auth.service";
+import {CreateRecipeComponent} from "../create-recipe/create-recipe.component";
+import {DialogService, DynamicDialogModule, DynamicDialogRef} from "primeng/dynamicdialog";
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [CommonModule, SharedModule, AvatarModule, ButtonModule, MenuModule],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
+  providers: [DialogService]
 })
 export class HeaderComponent implements OnInit {
 
   isLoggedIn: Boolean | undefined;
   items: MenuItem[] = [];
+  ref?: DynamicDialogRef;
 
-  constructor(private storageService: StorageService, private authService: AuthService) { }
+  constructor(private storageService: StorageService, private authService: AuthService, private dialogService: DialogService) { }
 
   ngOnInit() {
     this.isLoggedIn = this.storageService.isLoggedIn();
@@ -39,5 +43,9 @@ export class HeaderComponent implements OnInit {
         //this.errorMessage[0].detail = err.error;
       }
     });
+  }
+
+  show() {
+    this.ref = this.dialogService.open(CreateRecipeComponent, {header: 'Create a recipe'});
   }
 }

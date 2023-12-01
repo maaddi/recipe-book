@@ -1,0 +1,29 @@
+<div class="container">
+  <form [formGroup]="recipeForm" class="formGroup">
+    <span class="p-float-label">
+      <input id="title" type="text" pInputText formControlName="title" class="p-inputtext-sm">
+      <label for="title">Title</label>
+    </span>
+    <form [formGroup]="ingredientForm">
+      <div *ngIf="ingredientActive" class="ingredientInput">
+        <span class="p-float-label">
+          <input id="name" type="text" pInputText formControlName="name" class="p-inputtext-sm">
+          <label for="name">Name</label>
+        </span>
+        <span class="p-float-label">
+          <input id="amount" type="text" pInputText formControlName="amount" class="p-inputtext-sm">
+          <label for="amount">Amount</label>
+        </span>
+        <div>
+          <p-dropdown id="unit" formControlName="unit" [options]="units" placeholder="Select a unit"></p-dropdown>
+        </div>
+        <div>
+          <p-button label="Confirm ingredient" (click)="addIngredient()"></p-button>
+        </div>
+      </div>
+      <div *ngIf="!ingredientActive">
+        <p-button label="Add ingredient" (click)="ingredientActive = !ingredientActive"></p-button>
+      </div>
+    </form>
+  </form>
+</div>

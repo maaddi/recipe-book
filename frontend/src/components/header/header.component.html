@@ -1,9 +1,9 @@
 <div *ngIf="isLoggedIn">
   <nav class="header">
-    <div class="item">
-      <a><p-button label="Add recipe"></p-button></a>
+    <div>
+      <p-button label="Add recipe" (click)="show()"></p-button>
     </div>
-    <div class="item">
+    <div>
       <p-menu #menu [model]="items" [popup]="true"></p-menu>
       <p-avatar icon="pi pi-user" size="large" shape="circle" (click)="menu.toggle($event)"></p-avatar>
     </div>

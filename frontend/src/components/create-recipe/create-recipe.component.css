@@ -1,0 +1,15 @@
+.container {
+
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.ingredientInput {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
