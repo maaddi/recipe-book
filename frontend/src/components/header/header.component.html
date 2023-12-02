@@ -1,7 +1,7 @@
 <div *ngIf="isLoggedIn">
   <nav class="header">
     <div>
-      <p-button label="Add recipe" (click)="show()"></p-button>
+      <p-button label="Add recipe" [routerLink]="['/createRecipe']"></p-button>
     </div>
     <div>
       <p-menu #menu [model]="items" [popup]="true"></p-menu>

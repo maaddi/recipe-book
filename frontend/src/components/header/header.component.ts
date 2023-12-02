@@ -21,9 +21,8 @@ export class HeaderComponent implements OnInit {
 
   isLoggedIn: Boolean | undefined;
   items: MenuItem[] = [];
-  ref?: DynamicDialogRef;
 
-  constructor(private storageService: StorageService, private authService: AuthService, private dialogService: DialogService) { }
+  constructor(private storageService: StorageService, private authService: AuthService) { }
 
   ngOnInit() {
     this.isLoggedIn = this.storageService.isLoggedIn();
@@ -43,9 +42,5 @@ export class HeaderComponent implements OnInit {
         //this.errorMessage[0].detail = err.error;
       }
     });
-  }
-
-  show() {
-    this.ref = this.dialogService.open(CreateRecipeComponent, {header: 'Create a recipe'});
   }
 }

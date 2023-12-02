@@ -1,15 +1,89 @@
 .container {
+  margin: 3em auto;
+  width: 50%;
+}
 
+:host >>> .p-card-title {
+  text-align: center;
 }
 
 .formGroup {
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 2em;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.right {
+  width: 100%;
+}
+
+.ingredientForm {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
 }
 
 .ingredientInput {
   display: flex;
+  gap: 2em;
+  flex-wrap: wrap;
+}
+
+.addedIngredients {
+  display: flex;
   flex-direction: column;
   gap: 1em;
+}
+
+.dropdown {
+  margin-top: 1.5rem;
+}
+
+.button {
+  margin-top: 1.5rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 12px;
+  left: 0.75rem;
+  position: relative;
+  color: #6c757d;
+}
+
+ngx-editor {
+  display: block;
+  width: 100%;
+}
+
+:host >>> .NgxEditor__Content {
+  height: 500px;
+}
+
+:host >>> .p-card {
+  border: 1px solid #B7791F;
+  background-color: #EDF2F790;
+}
+
+.end {
+  display: flex;
+  gap: 0.5em;
+}
+
+.tags {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.tag {
+  display: flex;
+  gap: 0.5em;
 }
