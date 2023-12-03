@@ -1,6 +1,6 @@
 import {Component, EnvironmentInjector, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Ingredient, Unit} from "../../dtos/ingredient";
 import {InputTextModule} from "primeng/inputtext";
 import {ButtonModule} from "primeng/button";
@@ -14,20 +14,27 @@ import {RadioButtonModule} from "primeng/radiobutton";
 import {SelectButtonModule} from "primeng/selectbutton";
 import {RecipeService} from "../../services/recipe.service";
 import {Recipe} from "../../dtos/recipe";
+import {Router} from "@angular/router";
+import {MessagesModule} from "primeng/messages";
+import {Message} from "primeng/api";
 
 @Component({
   selector: 'app-create-recipe',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, InputTextModule, ButtonModule, DropdownModule, NgxEditorModule, CardModule, ToolbarModule, RadioButtonModule, SelectButtonModule],
+  imports: [CommonModule, ReactiveFormsModule, InputTextModule, ButtonModule, DropdownModule, NgxEditorModule, CardModule, ToolbarModule, RadioButtonModule, SelectButtonModule, MessagesModule],
   templateUrl: './create-recipe.component.html',
   styleUrls: ['./create-recipe.component.css']
 })
-export class CreateRecipeComponent {
+export class CreateRecipeComponent implements OnInit {
 
   ingredients: Ingredient[] = [];
   ingredientActive = false;
   editor: Editor = new Editor();
   editMode = false;
+  isSuccessful = false;
+  isCreationFailed = false;
+  successMessage: Message[] = [];
+  errorMessage: Message[] = [];
 
   units = [
     {label: 'Gram', value: Unit.Gram},
@@ -47,13 +54,24 @@ export class CreateRecipeComponent {
   });
 
   ingredientForm: FormGroup = this.fb.group({
-    name: [''],
-    amount: [''],
-    unit: ['']
+    name: ['', Validators.required],
+    amount: ['', Validators.required],
+    unit: ['', Validators.required]
   })
 
-  constructor(private fb: FormBuilder, private recipeService: RecipeService) {
+  constructor(private fb: FormBuilder, private recipeService: RecipeService, private router: Router) {
 
+  }
+
+  ngOnInit() {
+    this.successMessage = [{
+      severity: 'success',
+      detail: 'The recipe has been created!'
+    }];
+    this.errorMessage = [{
+      severity: 'error',
+      detail: 'Error'
+    }];
   }
 
   onSubmit(): void {
@@ -62,6 +80,7 @@ export class CreateRecipeComponent {
       return
     }
 
+    this.isCreationFailed = false;
     const tags: string[] = [this.recipeForm.value.tag1, this.recipeForm.value.tag2, this.recipeForm.value.tag3];
     const user = window.sessionStorage.getItem('auth-user');
     let userId;
@@ -80,15 +99,18 @@ export class CreateRecipeComponent {
     this.recipeService.createRecipe(recipe).subscribe({
       next: data => {
         console.log(data);
+        this.isSuccessful = true;
+        setInterval(() => {
+          this.router.navigate(['/home']);}, 3000);
       },
       error: err => {
-        console.log(err);
+        this.errorMessage[0].detail = err.error;
+        this.isCreationFailed = true;
       }
     });
   }
 
-  addIngredient(): void {
-    console.log(this.units);
+  addIngredient(form2: FormGroupDirective): void {
     if (!this.ingredientForm.valid) {
       console.log("Invalid ingredient!");
       return;
@@ -97,6 +119,7 @@ export class CreateRecipeComponent {
     ingredient.edit = false;
     this.ingredients.push(ingredient);
     this.ingredientActive = false;
+    form2.resetForm();
     this.ingredientForm.reset();
   }
 
@@ -110,8 +133,10 @@ export class CreateRecipeComponent {
     this.editMode = !this.editMode;
   }
 
-  clearInput() {
+  clearInput(form2: FormGroupDirective) {
     this.ingredientActive = !this.ingredientActive;
+    console.log(this.ingredientForm.valid);
+    form2.resetForm();
     this.ingredientForm.reset();
   }
 
@@ -139,11 +164,19 @@ export class CreateRecipeComponent {
     return this.recipeForm.get('title');
   }
 
-  get ingredient() {
-    return this.recipeForm.get('ingredients');
-  }
-
   get instructions() {
     return this.recipeForm.get('instruction');
+  }
+
+  get name() {
+    return this.ingredientForm.get('name');
+  }
+
+  get amount() {
+    return this.ingredientForm.get('amount');
+  }
+
+  get unit() {
+    return this.ingredientForm.get('unit');
   }
 }

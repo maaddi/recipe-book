@@ -1,6 +1,6 @@
 <div class="container">
   <p-card header="Create recipe">
-    <form [formGroup]="recipeForm" class="formGroup" #form="ngForm" (ngSubmit)="onSubmit()">
+    <form *ngIf="!isSuccessful" [formGroup]="recipeForm" class="formGroup" #form="ngForm" (ngSubmit)="onSubmit()">
       <div class="left">
         <div>
           <span class="p-float-label">
@@ -26,24 +26,37 @@
         </div>
 
         <div>
-          <form [formGroup]="ingredientForm" class="ingredientForm">
+          <form [formGroup]="ingredientForm" class="ingredientForm" #form2="ngForm">
             <div *ngIf="ingredientActive" class="ingredientInput">
               <div>
-                <p-button label="Confirm ingredient" (click)="addIngredient()"></p-button>
+                <p-button label="Confirm ingredient" (click)="addIngredient(form2)" type="submit"></p-button>
               </div>
-              <span class="p-float-label">
-                <input id="name" type="text" pInputText formControlName="name">
-                <label for="name">Name</label>
-              </span>
-              <span class="p-float-label">
-                <input id="amount" type="text" pInputText formControlName="amount">
-                <label for="amount">Amount</label>
-              </span>
+              <div>
+                <span class="p-float-label">
+                  <input id="name" type="text" pInputText formControlName="name">
+                  <label for="name">Name</label>
+                </span>
+                <div *ngIf="name?.invalid && (name?.dirty || form2.submitted)">
+                  <span *ngIf="name?.errors?.['required']" class="p-error">Name is required!</span>
+                </div>
+              </div>
+              <div>
+                <span class="p-float-label">
+                  <input id="amount" type="number" pInputText formControlName="amount">
+                  <label for="amount">Amount</label>
+                </span>
+                <div *ngIf="amount?.invalid && (amount?.dirty || form2.submitted)">
+                  <span *ngIf="amount?.errors?.['required']" class="p-error">Amount is required!</span>
+                </div>
+              </div>
               <div>
                 <p-dropdown id="unit" formControlName="unit" [options]="units" placeholder="Select a unit"></p-dropdown>
+                <div *ngIf="unit?.invalid && (unit?.dirty || form2.submitted)">
+                  <span *ngIf="unit?.errors?.['required']" class="p-error">Unit is required!</span>
+                </div>
               </div>
               <div>
-                <p-button icon="pi pi-times" (click)="clearInput()"></p-button>
+                <p-button icon="pi pi-times" (click)="clearInput(form2)"></p-button>
               </div>
             </div>
             <div *ngIf="!ingredientActive">
@@ -80,7 +93,7 @@
                     </div>
                     <div>
                       <label for="amountEdit" class="label">Amount</label>
-                      <input id="amountEdit" type="text" pInputText formControlName="amount" placeholder="{{ingredient.amount}}">
+                      <input id="amountEdit" type="number" pInputText formControlName="amount" placeholder="{{ingredient.amount}}">
                     </div>
                     <div class="dropdown">
                       <p-dropdown id="unitEdit" formControlName="unit" [options]="units" placeholder="{{ingredient.unit}}"></p-dropdown>
@@ -111,6 +124,12 @@
         </div>
       </div>
       <p-button type="submit" label="Create Recipe"></p-button>
+      <div *ngIf="isCreationFailed">
+        <p-messages [value]="errorMessage"></p-messages>
+      </div>
     </form>
+    <div *ngIf="isSuccessful">
+      <p-messages [value]="successMessage" [closable]="false"></p-messages>
+    </div>
   </p-card>
 </div>
