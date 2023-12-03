@@ -4,6 +4,9 @@
       <p-button label="Add recipe" [routerLink]="['/createRecipe']"></p-button>
     </div>
     <div>
+      <p-avatar icon="pi pi-home" size="large" shape="circle" routerLink="/home"></p-avatar>
+    </div>
+    <div>
       <p-menu #menu [model]="items" [popup]="true"></p-menu>
       <p-avatar icon="pi pi-user" size="large" shape="circle" (click)="menu.toggle($event)"></p-avatar>
     </div>
