@@ -16,7 +16,6 @@ public class TestController {
         return "Public Content.";
     }
 
-    @CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
     @GetMapping("/user")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public String userAccess() {

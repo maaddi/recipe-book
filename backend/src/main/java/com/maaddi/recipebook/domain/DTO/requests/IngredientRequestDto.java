@@ -1,21 +1,17 @@
-package com.maaddi.recipebook.domain.entities;
+package com.maaddi.recipebook.domain.DTO.requests;
 
-import jakarta.persistence.*;
+import com.maaddi.recipebook.domain.DTO.requests.RecipeRequestDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "ingredients")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Ingredient {
+@NoArgsConstructor
+public class IngredientRequestDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank(message = "Ingredient name must not be blank")
@@ -27,7 +23,5 @@ public class Ingredient {
     @NotBlank(message = "Unit must not be blank")
     private String unit;
 
-    @ManyToOne
-    @JoinColumn(name = "recipe_id", nullable = false)
-    private Recipe recipe;
+    private RecipeRequestDto recipeRequestDto;
 }

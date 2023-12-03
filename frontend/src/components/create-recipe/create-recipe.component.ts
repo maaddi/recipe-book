@@ -12,6 +12,8 @@ import {ToolbarModule} from "primeng/toolbar";
 import {v4 as uuidv4} from 'uuid';
 import {RadioButtonModule} from "primeng/radiobutton";
 import {SelectButtonModule} from "primeng/selectbutton";
+import {RecipeService} from "../../services/recipe.service";
+import {Recipe} from "../../dtos/recipe";
 
 @Component({
   selector: 'app-create-recipe',
@@ -37,26 +39,57 @@ export class CreateRecipeComponent {
 
   recipeForm: FormGroup = this.fb.group({
     title: ['', Validators.required],
-    ingredients: [this.ingredients, Validators.required],
+    ingredients: [this.ingredients, this.validateIngredients()],
     instruction: ['', Validators.required],
-    tag1: [''],
-    tag2: [''],
-    tag3: ['']
+    tag1: [null],
+    tag2: [null],
+    tag3: [null]
   });
 
   ingredientForm: FormGroup = this.fb.group({
-    name: ['', Validators.required],
-    amount: ['', Validators.required],
-    unit: ['', Validators.required]
+    name: [''],
+    amount: [''],
+    unit: ['']
   })
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private recipeService: RecipeService) {
 
+  }
+
+  onSubmit(): void {
+    if (!this.recipeForm.valid) {
+      console.log("Invalid Recipe!");
+      return
+    }
+
+    const tags: string[] = [this.recipeForm.value.tag1, this.recipeForm.value.tag2, this.recipeForm.value.tag3];
+    const user = window.sessionStorage.getItem('auth-user');
+    let userId;
+    if (user) {
+      userId = JSON.parse(user).id;
+    }
+
+    const recipe = {
+      title: this.recipeForm.value.title,
+      ingredients: this.recipeForm.value.ingredients,
+      tags: tags,
+      instructions: this.recipeForm.value.instruction,
+      userId: userId
+    } as Recipe;
+
+    this.recipeService.createRecipe(recipe).subscribe({
+      next: data => {
+        console.log(data);
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
   }
 
   addIngredient(): void {
     console.log(this.units);
-    if (!this.ingredientForm) {
+    if (!this.ingredientForm.valid) {
       console.log("Invalid ingredient!");
       return;
     }
@@ -96,5 +129,21 @@ export class CreateRecipeComponent {
     this.ingredients[index].edit = false;
     this.ingredientForm.reset();
     this.editMode = false;
+  }
+
+  validateIngredients(): boolean {
+    return this.ingredients.length != 0;
+  }
+
+  get title() {
+    return this.recipeForm.get('title');
+  }
+
+  get ingredient() {
+    return this.recipeForm.get('ingredients');
+  }
+
+  get instructions() {
+    return this.recipeForm.get('instruction');
   }
 }

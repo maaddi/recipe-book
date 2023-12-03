@@ -1,6 +1,6 @@
 package com.maaddi.recipebook.mapper;
 
-import com.maaddi.recipebook.domain.DTO.SignupRequestDto;
+import com.maaddi.recipebook.domain.DTO.requests.SignupRequestDto;
 import com.maaddi.recipebook.domain.DTO.UserDto;
 import com.maaddi.recipebook.domain.entities.User;
 import org.mapstruct.Mapper;

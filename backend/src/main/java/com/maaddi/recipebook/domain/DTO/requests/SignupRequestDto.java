@@ -1,4 +1,4 @@
-package com.maaddi.recipebook.domain.DTO;
+package com.maaddi.recipebook.domain.DTO.requests;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

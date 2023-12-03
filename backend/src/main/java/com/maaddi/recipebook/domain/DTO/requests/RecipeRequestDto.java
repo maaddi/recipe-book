@@ -1,7 +1,7 @@
-package com.maaddi.recipebook.domain.DTO;
+package com.maaddi.recipebook.domain.DTO.requests;
 
-import com.maaddi.recipebook.domain.DTO.requests.IngredientRequestDto;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class RecipeDto {
+@NoArgsConstructor
+public class RecipeRequestDto {
 
     private Long id;
 
@@ -20,10 +20,13 @@ public class RecipeDto {
     private String title;
 
     @Size(min = 1)
-    private List<IngredientDto> ingredients;
+    private List<IngredientRequestDto> ingredients;
 
     @NotBlank(message = "Instructions must not be blank")
     private String instructions;
 
     private List<String> tags;
+
+    @NotNull
+    private Long userId;
 }

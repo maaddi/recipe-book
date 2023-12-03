@@ -1,11 +1,16 @@
 <div class="container">
   <p-card header="Create recipe">
-    <form [formGroup]="recipeForm" class="formGroup">
+    <form [formGroup]="recipeForm" class="formGroup" #form="ngForm" (ngSubmit)="onSubmit()">
       <div class="left">
-        <span class="p-float-label">
-          <input id="title" type="text" pInputText formControlName="title">
-          <label for="title">Title</label>
-        </span>
+        <div>
+          <span class="p-float-label">
+            <input id="title" type="text" pInputText formControlName="title">
+            <label for="title">Title</label>
+          </span>
+          <div *ngIf="title?.invalid && (title?.dirty || form.submitted)">
+            <span *ngIf="title?.errors?.['required']" class="p-error">Title is required!</span>
+          </div>
+        </div>
 
         <div class="tags">
           <span>Categories:</span>
@@ -20,82 +25,90 @@
           </div>
         </div>
 
-        <form [formGroup]="ingredientForm" class="ingredientForm">
-          <div *ngIf="ingredientActive" class="ingredientInput">
-            <div>
-              <p-button label="Confirm ingredient" (click)="addIngredient()"></p-button>
-            </div>
-            <span class="p-float-label">
-              <input id="name" type="text" pInputText formControlName="name">
-              <label for="name">Name</label>
-            </span>
-            <span class="p-float-label">
-              <input id="amount" type="text" pInputText formControlName="amount">
-              <label for="amount">Amount</label>
-            </span>
-            <div>
-              <p-dropdown id="unit" formControlName="unit" [options]="units" placeholder="Select a unit"></p-dropdown>
-            </div>
-            <div>
-              <p-button icon="pi pi-times" (click)="clearInput()"></p-button>
-            </div>
-          </div>
-          <div *ngIf="!ingredientActive">
-            <p-button label="Add ingredient" (click)="ingredientActive = !ingredientActive"></p-button>
-          </div>
-          <div *ngIf="ingredients.length != 0" class="addedIngredients">
-            <span>Ingredients:</span>
-            <div *ngFor="let ingredient of ingredients">
-              <div *ngIf="!ingredient.edit">
-                <p-toolbar *ngIf="!editMode">
-                  <span>Name: {{ingredient.name}} </span>
-                  <span>Amount: {{ingredient.amount}} </span>
-                  <span>Unit: {{ingredient.unit}} </span>
-                  <div class="end">
-                    <p-button icon="pi pi-pencil" (click)="changeMode(ingredient)"></p-button>
-                    <p-button icon="pi pi-times" (click)="removeIngredient(ingredient)"></p-button>
-                  </div>
-                </p-toolbar>
-                <p-toolbar *ngIf="editMode">
-                  <span>Name: {{ingredient.name}} </span>
-                  <span>Amount: {{ingredient.amount}} </span>
-                  <span>Unit: {{ingredient.unit}} </span>
-                  <div class="end">
-                    <p-button icon="pi pi-pencil" (click)="changeMode(ingredient)" [disabled]="true"></p-button>
-                    <p-button icon="pi pi-times" (click)="removeIngredient(ingredient)" [disabled]="true"></p-button>
-                  </div>
-                </p-toolbar>
+        <div>
+          <form [formGroup]="ingredientForm" class="ingredientForm">
+            <div *ngIf="ingredientActive" class="ingredientInput">
+              <div>
+                <p-button label="Confirm ingredient" (click)="addIngredient()"></p-button>
               </div>
-              <div *ngIf="ingredient.edit">
-                <p-toolbar>
-                  <div>
-                    <label for="nameEdit" class="label">Name</label>
-                    <input id="nameEdit" type="text" pInputText formControlName="name" placeholder="{{ingredient.name}}">
-                  </div>
-                  <div>
-                    <label for="amountEdit" class="label">Amount</label>
-                    <input id="amountEdit" type="text" pInputText formControlName="amount" placeholder="{{ingredient.amount}}">
-                  </div>
-                  <div class="dropdown">
-                    <p-dropdown id="unitEdit" formControlName="unit" [options]="units" placeholder="{{ingredient.unit}}"></p-dropdown>
-                  </div>
-                  <div class="end">
-                    <div class="button">
-                      <p-button label="Change ingredient" (click)="changeIngredient(ingredient)"></p-button>
-                    </div>
-                    <div class="button">
-                      <p-button icon="pi pi-arrow-left" (click)="changeMode(ingredient)"></p-button>
-                    </div>
-                  </div>
-                </p-toolbar>
+              <span class="p-float-label">
+                <input id="name" type="text" pInputText formControlName="name">
+                <label for="name">Name</label>
+              </span>
+              <span class="p-float-label">
+                <input id="amount" type="text" pInputText formControlName="amount">
+                <label for="amount">Amount</label>
+              </span>
+              <div>
+                <p-dropdown id="unit" formControlName="unit" [options]="units" placeholder="Select a unit"></p-dropdown>
+              </div>
+              <div>
+                <p-button icon="pi pi-times" (click)="clearInput()"></p-button>
               </div>
             </div>
+            <div *ngIf="!ingredientActive">
+              <p-button label="Add ingredient" (click)="ingredientActive = !ingredientActive"></p-button>
+            </div>
+            <div *ngIf="ingredients.length != 0" class="addedIngredients">
+              <span>Ingredients:</span>
+              <div *ngFor="let ingredient of ingredients">
+                <div *ngIf="!ingredient.edit">
+                  <p-toolbar *ngIf="!editMode">
+                    <span>Name: {{ingredient.name}} </span>
+                    <span>Amount: {{ingredient.amount}} </span>
+                    <span>Unit: {{ingredient.unit}} </span>
+                    <div class="end">
+                      <p-button icon="pi pi-pencil" (click)="changeMode(ingredient)"></p-button>
+                      <p-button icon="pi pi-times" (click)="removeIngredient(ingredient)"></p-button>
+                    </div>
+                  </p-toolbar>
+                  <p-toolbar *ngIf="editMode">
+                    <span>Name: {{ingredient.name}} </span>
+                    <span>Amount: {{ingredient.amount}} </span>
+                    <span>Unit: {{ingredient.unit}} </span>
+                    <div class="end">
+                      <p-button icon="pi pi-pencil" (click)="changeMode(ingredient)" [disabled]="true"></p-button>
+                      <p-button icon="pi pi-times" (click)="removeIngredient(ingredient)" [disabled]="true"></p-button>
+                    </div>
+                  </p-toolbar>
+                </div>
+                <div *ngIf="ingredient.edit">
+                  <p-toolbar>
+                    <div>
+                      <label for="nameEdit" class="label">Name</label>
+                      <input id="nameEdit" type="text" pInputText formControlName="name" placeholder="{{ingredient.name}}">
+                    </div>
+                    <div>
+                      <label for="amountEdit" class="label">Amount</label>
+                      <input id="amountEdit" type="text" pInputText formControlName="amount" placeholder="{{ingredient.amount}}">
+                    </div>
+                    <div class="dropdown">
+                      <p-dropdown id="unitEdit" formControlName="unit" [options]="units" placeholder="{{ingredient.unit}}"></p-dropdown>
+                    </div>
+                    <div class="end">
+                      <div class="button">
+                        <p-button label="Change ingredient" (click)="changeIngredient(ingredient)"></p-button>
+                      </div>
+                      <div class="button">
+                        <p-button icon="pi pi-arrow-left" (click)="changeMode(ingredient)"></p-button>
+                      </div>
+                    </div>
+                  </p-toolbar>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div *ngIf="ingredients.length == 0 && form.submitted">
+            <span class="p-error">Ingredient is required!</span>
           </div>
-        </form>
+        </div>
       </div>
       <div class="right">
         <ngx-editor-menu [editor]="editor"></ngx-editor-menu>
         <ngx-editor [editor]="editor" formControlName="instruction" id="instruction" placeholder="Type your recipe instructions here..."></ngx-editor>
+        <div *ngIf="instructions?.invalid && (instructions?.dirty || form.submitted)">
+          <span *ngIf="instructions?.errors?.['required']" class="p-error">Instruction is required!</span>
+        </div>
       </div>
       <p-button type="submit" label="Create Recipe"></p-button>
     </form>

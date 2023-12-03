@@ -1,8 +1,8 @@
 package com.maaddi.recipebook.services.impl;
 
 import com.maaddi.recipebook.domain.DTO.jwt.JwtResponseDto;
-import com.maaddi.recipebook.domain.DTO.LoginRequestDto;
-import com.maaddi.recipebook.domain.DTO.SignupRequestDto;
+import com.maaddi.recipebook.domain.DTO.requests.LoginRequestDto;
+import com.maaddi.recipebook.domain.DTO.requests.SignupRequestDto;
 import com.maaddi.recipebook.domain.DTO.jwt.TokenRefreshRequestDto;
 import com.maaddi.recipebook.domain.DTO.jwt.TokenRefreshResponseDto;
 import com.maaddi.recipebook.domain.ERole;
