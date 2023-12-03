@@ -47,13 +47,22 @@
             <span>Ingredients:</span>
             <div *ngFor="let ingredient of ingredients">
               <div *ngIf="!ingredient.edit">
-                <p-toolbar>
+                <p-toolbar *ngIf="!editMode">
                   <span>Name: {{ingredient.name}} </span>
                   <span>Amount: {{ingredient.amount}} </span>
                   <span>Unit: {{ingredient.unit}} </span>
                   <div class="end">
                     <p-button icon="pi pi-pencil" (click)="changeMode(ingredient)"></p-button>
                     <p-button icon="pi pi-times" (click)="removeIngredient(ingredient)"></p-button>
+                  </div>
+                </p-toolbar>
+                <p-toolbar *ngIf="editMode">
+                  <span>Name: {{ingredient.name}} </span>
+                  <span>Amount: {{ingredient.amount}} </span>
+                  <span>Unit: {{ingredient.unit}} </span>
+                  <div class="end">
+                    <p-button icon="pi pi-pencil" (click)="changeMode(ingredient)" [disabled]="true"></p-button>
+                    <p-button icon="pi pi-times" (click)="removeIngredient(ingredient)" [disabled]="true"></p-button>
                   </div>
                 </p-toolbar>
               </div>
@@ -75,7 +84,7 @@
                       <p-button label="Change ingredient" (click)="changeIngredient(ingredient)"></p-button>
                     </div>
                     <div class="button">
-                      <p-button icon="pi pi-times" (click)="changeMode(ingredient)"></p-button>
+                      <p-button icon="pi pi-arrow-left" (click)="changeMode(ingredient)"></p-button>
                     </div>
                   </div>
                 </p-toolbar>

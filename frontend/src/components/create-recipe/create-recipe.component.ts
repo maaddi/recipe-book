@@ -25,6 +25,7 @@ export class CreateRecipeComponent {
   ingredients: Ingredient[] = [];
   ingredientActive = false;
   editor: Editor = new Editor();
+  editMode = false;
 
   units = [
     {label: 'Gram', value: Unit.Gram},
@@ -73,6 +74,7 @@ export class CreateRecipeComponent {
 
   changeMode(ingredient: Ingredient): void {
     ingredient.edit = !ingredient.edit;
+    this.editMode = !this.editMode;
   }
 
   clearInput() {
@@ -93,5 +95,6 @@ export class CreateRecipeComponent {
     }
     this.ingredients[index].edit = false;
     this.ingredientForm.reset();
+    this.editMode = false;
   }
 }
