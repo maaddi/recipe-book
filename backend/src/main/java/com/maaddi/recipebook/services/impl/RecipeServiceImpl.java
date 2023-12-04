@@ -1,5 +1,6 @@
 package com.maaddi.recipebook.services.impl;
 
+import com.maaddi.recipebook.domain.DTO.load.LoadRecipesDto;
 import com.maaddi.recipebook.domain.DTO.requests.RecipeRequestDto;
 import com.maaddi.recipebook.domain.entities.Ingredient;
 import com.maaddi.recipebook.domain.entities.Recipe;
@@ -16,6 +17,9 @@ import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -74,5 +78,14 @@ public class RecipeServiceImpl implements RecipeService {
         recipe.setIngredients(ingredients);
 
         return recipeRepository.save(recipe);
+    }
+
+    @Override
+    public Page<Recipe> loadAll(LoadRecipesDto loadRecipesDto) {
+        LOGGER.info("Trying to retrieve page: {}", loadRecipesDto.getPageNumber());
+
+        Pageable page = PageRequest.of(loadRecipesDto.getPageNumber(), loadRecipesDto.getPageSize());
+
+        return recipeRepository.findAllByUserId(loadRecipesDto.getUserId(), page);
     }
 }

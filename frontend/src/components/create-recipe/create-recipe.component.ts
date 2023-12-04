@@ -75,6 +75,7 @@ export class CreateRecipeComponent implements OnInit {
   }
 
   onSubmit(): void {
+    console.log("in submit");
     if (!this.recipeForm.valid) {
       console.log("Invalid Recipe!");
       return
@@ -100,7 +101,7 @@ export class CreateRecipeComponent implements OnInit {
       next: data => {
         console.log(data);
         this.isSuccessful = true;
-        setInterval(() => {
+        setTimeout(() => {
           this.router.navigate(['/home']);}, 3000);
       },
       error: err => {

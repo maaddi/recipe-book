@@ -1,0 +1,54 @@
+.recipes {
+  display: grid;
+  margin: 4em;
+  grid-template-columns: repeat(6, 1fr);
+  column-gap: 4em;
+  row-gap: 4em;
+}
+
+.image {
+  border-radius: 6px 6px 0 0;
+}
+
+.tags {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+:host >>> .p-button {
+  background-color: #ECC94B;
+  color: black;
+  border: none;
+}
+
+:host >>> .p-button:hover {
+  filter: brightness(90%);
+}
+
+:host >>> .p-button:focus {
+  box-shadow: none;
+}
+
+:host >>> .p-card-title {
+  color: black;
+}
+
+:host >>> .tag-0 .p-tag {
+  background-color: #FEEBCB;
+  color: #7B341E;
+}
+
+:host >>> .tag-1 .p-tag {
+  background-color: #FED7E2;
+  color: #702459;
+}
+
+:host >>> .tag-2 .p-tag {
+  background-color: #E9D8FD;
+  color: #44337A;
+}
