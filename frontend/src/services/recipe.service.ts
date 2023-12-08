@@ -15,7 +15,7 @@ export class RecipeService {
   createRecipe(recipe: Recipe): Observable<any> {
     const url = API_URL + 'create';
     console.log(recipe);
-    return this.http.post<Recipe>(url, recipe);
+    return this.http.post(url, recipe);
   }
 
   loadAll(pageNumber: number, pageSize: number, userId: number): Observable<any> {
@@ -25,6 +25,11 @@ export class RecipeService {
       .set('pageSize', pageSize.toString())
       .set('userId', userId.toString());
 
-    return this.http.get<any>(url, { params });
+    return this.http.get(url, { params });
+  }
+
+  loadById(id: number): Observable<Recipe> {
+    const url = API_URL + id;
+    return this.http.get<Recipe>(url);
   }
 }

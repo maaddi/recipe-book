@@ -1,5 +1,5 @@
 .background {
-  background: url("src/images/loginBackground.jpg") no-repeat;
+  background: url("assets/images/loginBackground.jpg") no-repeat;
   background-size: cover;
   position: absolute;
   top: 0;

@@ -3,6 +3,7 @@ package com.maaddi.recipebook.controllers;
 import com.maaddi.recipebook.domain.DTO.RecipeDto;
 import com.maaddi.recipebook.domain.DTO.load.LoadRecipesDto;
 import com.maaddi.recipebook.domain.DTO.requests.RecipeRequestDto;
+import com.maaddi.recipebook.exception.NotFoundException;
 import com.maaddi.recipebook.exception.ValidationException;
 import com.maaddi.recipebook.mapper.RecipeMapper;
 import com.maaddi.recipebook.services.RecipeService;
@@ -39,9 +40,15 @@ public class RecipeController {
     }
 
     @GetMapping("/loadAll")
-    //@PreAuthorize("hasRole('User')")
+    @PreAuthorize("hasRole('USER')")
     public Page<RecipeDto> loadAll(@Valid LoadRecipesDto loadRecipesDto) {
         LOGGER.info("POST /api/recipe body: {}", loadRecipesDto);
         return recipeService.loadAll(loadRecipesDto).map(recipeMapper::recipeToRecipeDto);
+    }
+
+    @GetMapping("/{id}")
+    public RecipeDto loadById(@PathVariable Long id) throws NotFoundException {
+        LOGGER.info("POST /api/recipe body: {}", id);
+        return recipeMapper.recipeToRecipeDto(recipeService.loadById(id));
     }
 }

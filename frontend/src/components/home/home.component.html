@@ -3,11 +3,11 @@
     <div *ngFor="let recipe of content">
       <p-card header="{{recipe.title}}">
         <ng-template pTemplate="header">
-          <img alt="Card" src="loginBackground.jpg" class="image">
+          <img alt="Card" src="assets/images/loginBackground.jpg" class="image">
         </ng-template>
         <div class="buttons">
           <p-button label="Add to grocery list" icon="pi pi-plus" size="small"></p-button>
-          <p-button label="Details" size="small" class="button"></p-button>
+          <p-button label="Details" size="small" class="button" routerLink="/recipeDetails/{{recipe.id}}"></p-button>
         </div>
         <p-divider></p-divider>
         <div class="tags">

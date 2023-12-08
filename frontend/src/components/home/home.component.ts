@@ -7,11 +7,12 @@ import {CardModule} from "primeng/card";
 import {DividerModule} from "primeng/divider";
 import {ButtonModule} from "primeng/button";
 import {TagModule} from "primeng/tag";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, PaginatorModule, CardModule, DividerModule, ButtonModule, TagModule],
+  imports: [CommonModule, PaginatorModule, CardModule, DividerModule, ButtonModule, TagModule, RouterLink],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })

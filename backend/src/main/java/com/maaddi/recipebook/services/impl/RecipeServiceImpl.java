@@ -5,6 +5,7 @@ import com.maaddi.recipebook.domain.DTO.requests.RecipeRequestDto;
 import com.maaddi.recipebook.domain.entities.Ingredient;
 import com.maaddi.recipebook.domain.entities.Recipe;
 import com.maaddi.recipebook.domain.entities.User;
+import com.maaddi.recipebook.exception.NotFoundException;
 import com.maaddi.recipebook.exception.ValidationException;
 import com.maaddi.recipebook.mapper.IngredientMapper;
 import com.maaddi.recipebook.mapper.RecipeMapper;
@@ -87,5 +88,14 @@ public class RecipeServiceImpl implements RecipeService {
         Pageable page = PageRequest.of(loadRecipesDto.getPageNumber(), loadRecipesDto.getPageSize());
 
         return recipeRepository.findAllByUserId(loadRecipesDto.getUserId(), page);
+    }
+
+    @Override
+    public Recipe loadById(Long id) throws NotFoundException {
+        Optional<Recipe> recipe = recipeRepository.findById(id);
+        if (recipe.isEmpty()) {
+            throw new NotFoundException("Could not find recipe with the id: " + id.toString());
+        }
+        return recipe.get();
     }
 }

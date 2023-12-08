@@ -1,0 +1,31 @@
+<div class="container">
+  <h1>{{recipe?.title}}</h1>
+  <img src="/assets/images/loginBackground.jpg" alt="" class="image">
+  <div>
+    <div class="people">
+      <h2>Ingredients for {{peopleAmount}} people</h2>
+      <p-inputNumber [(ngModel)]="peopleAmount" [showButtons]="true" buttonLayout="horizontal" incrementButtonIcon="pi pi-plus"
+                     decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success" decrementButtonIcon="pi pi-minus" [min]="1" (onInput)="calculateIngredients()"></p-inputNumber>
+    </div>
+    <p-table [value]="ingredients">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Unit</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-ingredient>
+        <tr>
+          <td>{{ ingredient.name }}</td>
+          <td>{{ ingredient.amount }}</td>
+          <td>{{ ingredient.unit }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <div>
+      <h2>Instructions</h2>
+      <div [innerHTML]="recipe?.instructions"></div>
+    </div>
+  </div>
+</div>

@@ -42,7 +42,7 @@
               </div>
               <div>
                 <span class="p-float-label">
-                  <input id="amount" type="number" pInputText formControlName="amount">
+                  <input id="amount" type="number" pInputText formControlName="amount" (input)="checkValue($event)">
                   <label for="amount">Amount</label>
                 </span>
                 <div *ngIf="amount?.invalid && (amount?.dirty || form2.submitted)">
@@ -93,7 +93,7 @@
                     </div>
                     <div>
                       <label for="amountEdit" class="label">Amount</label>
-                      <input id="amountEdit" type="number" pInputText formControlName="amount" placeholder="{{ingredient.amount}}">
+                      <input id="amountEdit" type="number" pInputText formControlName="amount" placeholder="{{ingredient.amount}}" (input)="checkValue($event)">
                     </div>
                     <div class="dropdown">
                       <p-dropdown id="unitEdit" formControlName="unit" [options]="units" placeholder="{{ingredient.unit}}"></p-dropdown>

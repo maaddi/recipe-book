@@ -160,6 +160,13 @@ export class CreateRecipeComponent implements OnInit {
     return this.ingredients.length != 0;
   }
 
+  checkValue(event: any) {
+    if (event.target.value <= 0 && event.target.value != "") {
+      event.target.value = 1;
+      this.ingredientForm.controls['amount'].setValue(1);
+    }
+  }
+
   get title() {
     return this.recipeForm.get('title');
   }

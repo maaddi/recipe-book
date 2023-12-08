@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: 3em auto;
+  gap: 2em;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+h1 {
+  align-self: center;
+  margin-bottom: 0;
+}
+
+.people {
+  display: flex;
+  justify-content: space-between;
+}
+
+:host >>> .p-inputnumber {
+  margin: 0.83em 0;
+}
+
+th {
+  background-color: #FEEBCB;
+  border-color: #ED8936;
+}
+
+tr:nth-child(even) {
+  background-color: #FEEBCB;
+}
+
+tr:nth-child(odd) {
+  background-color: #FBD38D;
+}
+
+td {
+  border-color: #ED8936;
+}

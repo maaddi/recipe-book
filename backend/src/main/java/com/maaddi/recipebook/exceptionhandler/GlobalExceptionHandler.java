@@ -1,9 +1,6 @@
 package com.maaddi.recipebook.exceptionhandler;
 
-import com.maaddi.recipebook.exception.ConflictException;
-import com.maaddi.recipebook.exception.ErrorMessage;
-import com.maaddi.recipebook.exception.TokenRefreshException;
-import com.maaddi.recipebook.exception.ValidationException;
+import com.maaddi.recipebook.exception.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -38,6 +35,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleUnprocessableEntity(Exception ex, WebRequest request) {
         LOGGER.error(ex.getMessage(), ex);
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.UNPROCESSABLE_ENTITY, request);
+    }
+
+    @ExceptionHandler(value = {NotFoundException.class})
+    protected ResponseEntity<Object> handleNotFound(Exception ex, WebRequest request) {
+        LOGGER.error(ex.getMessage(), ex);
+        return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     @ExceptionHandler(value = {TokenRefreshException.class})

@@ -29,6 +29,7 @@ public class Recipe {
     private List<Ingredient> ingredients;
 
     @NotBlank(message = "Instructions must not be blank")
+    @Column(columnDefinition = "TEXT")
     private String instructions;
 
     @ElementCollection
