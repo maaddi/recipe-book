@@ -40,4 +40,22 @@ export class HomeComponent implements OnInit {
       }
     });
   }
+
+  onPageChange(event: any): void {
+    const user = window.sessionStorage.getItem('auth-user');
+    if (user) {
+      this.userId = JSON.parse(user).id;
+    }
+    this.recipeService.loadAll(event.page, 12, this.userId).subscribe({
+      next: data => {
+        console.log(data);
+        this.totalElements = data.totalElements;
+        this.size = data.size;
+        this.content = data.content;
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
+  }
 }

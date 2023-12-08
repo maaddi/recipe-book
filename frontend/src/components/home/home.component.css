@@ -52,3 +52,10 @@
   background-color: #E9D8FD;
   color: #44337A;
 }
+
+.paginator {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

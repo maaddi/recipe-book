@@ -75,8 +75,7 @@ export class CreateRecipeComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log("in submit");
-    if (!this.recipeForm.valid) {
+    if (!this.recipeForm.valid || !this.validateIngredients()) {
       console.log("Invalid Recipe!");
       return
     }

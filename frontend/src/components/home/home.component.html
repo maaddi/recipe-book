@@ -18,5 +18,7 @@
       </p-card>
     </div>
   </div>
-  <p-paginator [rows]="size" [totalRecords]="totalElements"></p-paginator>
+  <div class="paginator">
+    <p-paginator [rows]="size" [totalRecords]="totalElements" (onPageChange)="onPageChange($event)"></p-paginator>
+  </div>
 </div>
