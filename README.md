@@ -24,7 +24,7 @@ When being asked to enter a port, just leave the default value of 5432.
 
 After downloading and installing the above mentioned things open a shell (cmd, bash, ...) and navigate to the folder where you stored the .jar file. To start the server you then need to type the following command:
 
-*java -jar filename --db.password=your_password*
+`java -jar filename --db.password=your_password`
 
 where "filename" is the name of the jar file and "your_password" is the password you defined for postgresql.
 
@@ -37,13 +37,11 @@ In order to start the frontend server you need to download and install the follo
 
 After that extract the frontend folder you have just downloaded. Open another shell, navigate to the extracted folder and run the command:
 
-*npm install* (only for the first time you want to start the server)
+`npm install` &rarr; (only needed for the first time, when starting the server)
 
-After that run the command:
+After that run the following command to start the frontend server:
 
-*npm run ng serve*
-
-and your frontend server should be up and running.
+`npm run ng serve`
 
 ## 3. How to Use the Project
 (Pending)
