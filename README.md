@@ -22,7 +22,7 @@ When being asked to enter a port, just leave the default value of 5432.
 
 ![port](https://github.com/maaddi/recipe-book/assets/101003016/7cee423d-4ede-460f-9491-987976491bc7)
 
-After downloading and installing the above mentioned things open the command line and navigate to the folder where you stored the .jar file. To start the server you then need to type the following command:
+After downloading and installing the above mentioned things open a shell (cmd, bash, ...) and navigate to the folder where you stored the .jar file. To start the server you then need to type the following command:
 
 *java -jar filename --db.password=your_password*
 
@@ -31,8 +31,19 @@ where "filename" is the name of the jar file and "your_password" is the password
 After that your backend server should be up and running.
 
 ### 2.2. Frontend
-In order to start the backend server you need to download and install the following things:
+In order to start the frontend server you need to download and install the following things:
+- [Frontend folder](https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fmaaddi%2Frecipe-book%2Ftree%2Fmain%2Ffrontend)
+- [Node.js (LTS version)](https://nodejs.org/en)
 
+After that extract the frontend folder you have just downloaded. Open another shell, navigate to the extracted folder and run the command:
+
+*npm install* (only for the first time you want to start the server)
+
+After that run the command:
+
+*npm run ng serve*
+
+and your frontend server should be up and running.
 
 ## 3. How to Use the Project
 (Pending)
