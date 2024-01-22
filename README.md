@@ -11,7 +11,7 @@ Features to come:
 ### 2.1. Backend
 In order to start the backend server you need to download and install the following things:
 - [Java JDK (17 or above)](https://www.oracle.com/at/java/technologies/downloads/#jdk17-windows)
-- [Postgresql (16.1)](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
+- [PostgreSQL (16.1)](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
 - [jar file](https://github.com/maaddi/recipe-book/blob/main/backend/target/recipe-book-0.0.1-SNAPSHOT.jar)
 
 While installing postgresql you will get asked to provide a password. It is important to remember this password, because you will need it to run your backend server.
